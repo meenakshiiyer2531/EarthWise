@@ -26,7 +26,6 @@ body {
   }
 }
 
-
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -60,4 +59,116 @@ h1, h2, h3 {
 
 .rounded-full {
   border-radius: 9999px;
+}
+
+/* Ensure text color is black in SDGs section */
+.sdg-text-black {
+  color: #000000 !important;
+}
+
+.sdg-container {
+  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.sdg-container:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.nav-link, .nav-button {
+  transition: background-color 0.3s, color 0.3s;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+}
+
+.nav-link:hover, .nav-button:hover {
+  background-color: #2f855a; /* bg-green-700 */
+  color: #ffffff; /* text-white */
+}
+/* Header Navigation Links and Buttons */
+.nav-link, .nav-button {
+  transition: background-color 0.3s, color 0.3s;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+}
+
+.nav-link:hover, .nav-button:hover {
+  background-color: #2f855a; /* bg-green-700 */
+  color: #ffffff; /* text-white */
+}
+
+/* Hero Section Image */
+.hero-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+/* Header Navigation Links and Buttons */
+.nav-link, .nav-button {
+  transition: background-color 0.3s, color 0.3s;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+}
+
+.nav-link:hover, .nav-button:hover {
+  background-color: #2f855a; /* bg-green-700 */
+  color: #ffffff; /* text-white */
+}
+
+/* Hero Section Image */
+.hero-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+/* Header Navigation Links and Buttons */
+.nav-link, .nav-button {
+  transition: background-color 0.3s, color 0.3s;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+}
+
+.nav-link:hover, .nav-button:hover {
+  background-color: #2f855a; /* bg-green-700 */
+  color: #ffffff; /* text-white */
+}
+
+/* Hero Section Image */
+.hero-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+/* Header Navigation Links and Buttons */
+.nav-link, .nav-button {
+  transition: background-color 0.3s, color 0.3s;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+}
+
+.nav-link:hover, .nav-button:hover {
+  background-color: #2f855a; /* bg-green-700 */
+  color: #ffffff; /* text-white */
+}
+
+/* Hero Section Image */
+.hero-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+/* Hero Section */
+.hero-section {
+  background-image: url('/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 5rem 0;
+}
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
 }

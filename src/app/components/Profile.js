@@ -1,38 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Added useEffect for fetching data
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ModulePath = () => {
-  const [selectedModule, setSelectedModule] = useState(null); // State to track selected module
-  const [activeSidebarItem, setActiveSidebarItem] = useState('Modules'); // State for active sidebar item
+const Profile = () => {
+  const [selectedModule, setSelectedModule] = useState(null);
+  const [activeSidebarItem, setActiveSidebarItem] = useState('Science Lab');
+  const [userData, setUserData] = useState(null); // State to hold user data
+  const [loading, setLoading] = useState(true); // State to handle loading
 
-  const modules = [
-    { id: 1, name: 'MODULE 1', image: '/path-logo/image 23.png', link: '/module-1' },
-    { id: 2, name: 'MODULE 2', image: '/path-logo/image 24.png', link: '/module-2' },
-    { id: 3, name: 'QUIZ 1', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 4, name: 'MODULE 3', image: '/path-logo/image 44.png', link: '/module-3' },
-    { id: 5, name: 'MODULE 4', image: '/path-logo/image 26.png', link: '/module-4' },
-    { id: 6, name: 'QUIZ 2', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 7, name: 'MODULE 5', image: '/path-logo/image 27.png', link: '/module-5' },
-    { id: 8, name: 'MODULE 6', image: '/path-logo/image 28.png', link: '/module-6' },
-    { id: 9, name: 'QUIZ 3', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 10, name: 'MODULE 7', image: '/path-logo/image 29.png', link: '/module-7' },
-    { id: 11, name: 'MODULE 8', image: '/path-logo/image 30.png', link: '/module-8' },
-    { id: 12, name: 'QUIZ 4', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 13, name: 'MODULE 9', image: '/path-logo/image 31.png', link: '/module-9' },
-    { id: 14, name: 'MODULE 10', image: '/path-logo/image 32.png', link: '/module-10' },
-    { id: 15, name: 'QUIZ 5', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 16, name: 'MODULE 11', image: '/path-logo/image 33.png', link: '/module-11' },
-    { id: 17, name: 'MODULE 12', image: '/path-logo/image 34.png', link: '/module-12' },
-    { id: 18, name: 'QUIZ 6', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 19, name: 'MODULE 13', image: '/path-logo/image 35.png', link: '/module-13' },
-    { id: 20, name: 'MODULE 14', image: '/path-logo/image 36.png', link: '/module-14' },
-    { id: 21, name: 'QUIZ 7', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 22, name: 'MODULE 15', image: '/path-logo/image 37.png', link: '/module-15' },
-    { id: 23, name: 'MODULE 16', image: '/path-logo/image 38.png', link: '/module-16' },
-    { id: 24, name: 'MODULE 17', image: '/path-logo/image 39.png', link: '/module-17' },
-    { id: 25, name: 'QUIZ 8', image: '/path-logo/quiz.png', link: '/quiz' },
-  ];
+  // Example email; replace with the actual email from your user context or auth
+  const userEmail = "user@example.com"; // Get the user's email from context or props
+
+  const fetchUserData = async (email) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/profile/${encodeURIComponent(email)}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch profile data.');
+      }
+      const data = await response.json();
+      setUserData(data);
+    } catch (error) {
+      console.error('Error logging in:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (userEmail) {
+      fetchUserData(userEmail);
+    }
+  }, [userEmail]);
 
   const sidebarItems = [
     { name: 'Home', icon: '/sidebar/home.png', link: '/' },
@@ -42,11 +40,11 @@ const ModulePath = () => {
   ];
 
   const handleModuleClick = (id) => {
-    setSelectedModule(id); // Set the clicked module ID
+    setSelectedModule(id);
   };
 
   const handleSidebarItemClick = (item) => {
-    setActiveSidebarItem(item); // Set the active sidebar item
+    setActiveSidebarItem(item);
   };
 
   return (
@@ -112,10 +110,10 @@ const ModulePath = () => {
         </button>
       </div>
 
-      {/* Modules Section */}
+      {/* Experiment Section */}
       <div className="flex-1 p-8 bg-white rounded-xl">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-black">MODULES</h1>
+          <h1 className="text-4xl font-bold text-black">PROFILE</h1>
           <div className="flex space-x-10">
             <Link href="/notifications">
               <Image src="/notification.png" alt="Notifications" width={40} height={40} className="cursor-pointer" />
@@ -130,34 +128,37 @@ const ModulePath = () => {
         </div>
         <div className="flex flex-col items-center w-full">
           <div className="w-full">
-            <div className="grid grid-cols-4 gap-6 relative">
-              {modules.map((module) => (
-                <div
-                  key={module.id}
-                  className={`flex flex-col items-center p-4 transform transition-all duration-300 relative ${
-                    selectedModule === module.id ? 'bg-blue-500' : ''
-                  }`}
-                >
-                  <Link href={module.link} passHref onClick={() => handleModuleClick(module.id)}>
-                    <div className="bg-black rounded-full p-6 relative cursor-pointer">
-                      <Image
-                        src={module.image}
-                        alt={module.name}
-                        width={80}
-                        height={80}
-                        className="rounded-full"
-                      />
-                    </div>
-                  </Link>
-                  <p className="text-lg font-semibold text-gray-800 mt-2">{module.name}</p>
+            {/* Container for user profile info */}
+            {loading ? (
+              <p>Loading...</p> // Show loading state
+            ) : userData ? (
+              <div className="w-[893px] h-[229px] bg-[#c1dec0] rounded-2xl flex p-4">
+                <Image
+                  src={userData.profileImage} // Replace with actual image URL from userData
+                  alt="User Image"
+                  width={100}
+                  height={100}
+                  className="rounded-full mr-4"
+                />
+                <div className="flex flex-col justify-center">
+                  <h2 className="text-2xl font-bold">{userData.name}</h2> {/* Display user's name */}
+                  <p className="text-lg">{userData.school}</p> {/* Display user's school */}
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <p>No user data available.</p>
+            )}
           </div>
+
+          <div className="flex flex-col items-start w-full"> {/* Change items-center to items-start */}
+  <h2 className="mt-8 text-2xl font-semibold text-black">Progress</h2> {/* Added text-black for color */}
+  <div className="w-[1500px] h-[45px] bg-[#bebebe] rounded-[60px] mt-2" /> {/* Adjusted margin-top for alignment */}
+</div>
+
         </div>
       </div>
     </div>
   );
 };
 
-export default ModulePath;
+export default Profile;

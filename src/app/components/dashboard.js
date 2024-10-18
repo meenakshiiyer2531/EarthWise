@@ -2,40 +2,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ModulePath = () => {
+const Dashboard = () => {
   const [selectedModule, setSelectedModule] = useState(null); // State to track selected module
-  const [activeSidebarItem, setActiveSidebarItem] = useState('Modules'); // State for active sidebar item
-
-  const modules = [
-    { id: 1, name: 'MODULE 1', image: '/path-logo/image 23.png', link: '/module-1' },
-    { id: 2, name: 'MODULE 2', image: '/path-logo/image 24.png', link: '/module-2' },
-    { id: 3, name: 'QUIZ 1', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 4, name: 'MODULE 3', image: '/path-logo/image 44.png', link: '/module-3' },
-    { id: 5, name: 'MODULE 4', image: '/path-logo/image 26.png', link: '/module-4' },
-    { id: 6, name: 'QUIZ 2', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 7, name: 'MODULE 5', image: '/path-logo/image 27.png', link: '/module-5' },
-    { id: 8, name: 'MODULE 6', image: '/path-logo/image 28.png', link: '/module-6' },
-    { id: 9, name: 'QUIZ 3', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 10, name: 'MODULE 7', image: '/path-logo/image 29.png', link: '/module-7' },
-    { id: 11, name: 'MODULE 8', image: '/path-logo/image 30.png', link: '/module-8' },
-    { id: 12, name: 'QUIZ 4', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 13, name: 'MODULE 9', image: '/path-logo/image 31.png', link: '/module-9' },
-    { id: 14, name: 'MODULE 10', image: '/path-logo/image 32.png', link: '/module-10' },
-    { id: 15, name: 'QUIZ 5', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 16, name: 'MODULE 11', image: '/path-logo/image 33.png', link: '/module-11' },
-    { id: 17, name: 'MODULE 12', image: '/path-logo/image 34.png', link: '/module-12' },
-    { id: 18, name: 'QUIZ 6', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 19, name: 'MODULE 13', image: '/path-logo/image 35.png', link: '/module-13' },
-    { id: 20, name: 'MODULE 14', image: '/path-logo/image 36.png', link: '/module-14' },
-    { id: 21, name: 'QUIZ 7', image: '/path-logo/quiz.png', link: '/quiz' },
-    { id: 22, name: 'MODULE 15', image: '/path-logo/image 37.png', link: '/module-15' },
-    { id: 23, name: 'MODULE 16', image: '/path-logo/image 38.png', link: '/module-16' },
-    { id: 24, name: 'MODULE 17', image: '/path-logo/image 39.png', link: '/module-17' },
-    { id: 25, name: 'QUIZ 8', image: '/path-logo/quiz.png', link: '/quiz' },
-  ];
+  const [activeSidebarItem, setActiveSidebarItem] = useState('Home'); // State for active sidebar item
 
   const sidebarItems = [
-    { name: 'Home', icon: '/sidebar/home.png', link: '/' },
+    { name: 'Home', icon: '/sidebar/home.png', link: '/home' },
     { name: 'Modules', icon: '/sidebar/modules.png', link: '/modules' },
     { name: 'Science Lab', icon: '/sidebar/experiment.png', link: '/science-lab' },
     { name: 'Resources', icon: '/sidebar/resources.png', link: '/resources' },
@@ -79,7 +51,7 @@ const ModulePath = () => {
                       alt={item.name} 
                       width={30} 
                       height={30} 
-                      className="mr-4"
+                      className="mr-4" // Increased margin to the right of the icon
                     />
                     <span className="text-xl">{item.name}</span>
                   </div>
@@ -112,10 +84,10 @@ const ModulePath = () => {
         </button>
       </div>
 
-      {/* Modules Section */}
+      {/* Main Section */}
       <div className="flex-1 p-8 bg-white rounded-xl">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-black">MODULES</h1>
+          <h1 className="text-4xl font-bold text-black">DASHBOARD</h1>
           <div className="flex space-x-10">
             <Link href="/notifications">
               <Image src="/notification.png" alt="Notifications" width={40} height={40} className="cursor-pointer" />
@@ -128,36 +100,50 @@ const ModulePath = () => {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col items-center w-full">
-          <div className="w-full">
-            <div className="grid grid-cols-4 gap-6 relative">
-              {modules.map((module) => (
-                <div
-                  key={module.id}
-                  className={`flex flex-col items-center p-4 transform transition-all duration-300 relative ${
-                    selectedModule === module.id ? 'bg-blue-500' : ''
-                  }`}
-                >
-                  <Link href={module.link} passHref onClick={() => handleModuleClick(module.id)}>
-                    <div className="bg-black rounded-full p-6 relative cursor-pointer">
-                      <Image
-                        src={module.image}
-                        alt={module.name}
-                        width={80}
-                        height={80}
-                        className="rounded-full"
-                      />
-                    </div>
-                  </Link>
-                  <p className="text-lg font-semibold text-gray-800 mt-2">{module.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+
+        {/* Banner */}
+        <div className="rounded-lg overflow-hidden">
+          <Image 
+            src="/dashboard-banner.png" 
+            alt="Dashboard Banner" 
+            width={800} 
+            height={300}
+            className="w-full"
+          />
         </div>
+
+        {/* Learning Path */}
+        <div className="mt-10">
+          <h2 className="text-2xl font-semibold text-black">Start learning path</h2>
+          <div className="w-full bg-gray-200 rounded-full mt-4">
+            <div className="bg-grey-500 h-4 rounded-full w-1/2"></div> Progress Bar
+          </div>
+          <Link href="/modules" className=" items-right">
+          <button className="mt-9 bg-black text-white py-2 px-9 rounded-lg text-lg">
+            Start Now
+          </button>
+          </Link>
+        </div>
+
+        {/* Ask Me Section */}
+        <div className="fixed bottom-10 right-10 flex items-center">
+           <Link href="/help" className="relative flex flex-col items-center">
+                 <Image 
+                   src="/dog.gif" 
+                   alt="Ask Me!!" 
+                   width={120} 
+                   height={120}
+                   className="cursor-pointer"
+                 />
+                 <span className="bg-green-300 text-black font-semibold px-4 py-2 rounded-full mt-1 text-lg absolute -top-8">
+                   Ask Me !!
+                 </span>
+           </Link>
+        </div>
+
       </div>
     </div>
   );
 };
 
-export default ModulePath;
+export default Dashboard;

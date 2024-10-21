@@ -22,31 +22,38 @@ const profileSchema = new mongoose.Schema({
   phone: String,
   address: String,
   school: String,
+  points: { type: Number, default: 0 }, // Points default to 0
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
 
-// POST route to save the profile
-app.post('/api/profile', async (req, res) => {
-  const { name, email, phone, address, school } = req.body;
-
-  const newProfile = new Profile({
-    name,
-    email,
-    phone,
-    address,
-    school,
-  });
+// POST route for login (create or retrieve profile)
+app.post('/api/login', async (req, res) => {
+  const { email, name, phone, address, school } = req.body; // Expect these fields
 
   try {
-    await newProfile.save();
-    res.status(201).json({ message: 'Profile created successfully!' });
-  } catch (error) {
-    // Check for duplicate email error
-    if (error.code === 11000) {
-      return res.status(400).json({ error: 'Email already exists' });
+    // Check if the profile exists
+    let profile = await Profile.findOne({ email });
+
+    if (!profile) {
+      // Create a new profile with points initialized to 0
+      profile = new Profile({
+        name,
+        email,
+        phone,
+        address,
+        school,
+        points: 0,
+      });
+      await profile.save();
+      return res.status(201).json({ message: 'Profile created successfully!', profile });
+    } else {
+      // Return existing profile
+      return res.status(200).json({ message: 'Login successful', profile });
     }
-    res.status(500).json({ error: 'Failed to create profile', details: error.message });
+  } catch (error) {
+    console.error('Error in login route:', error);
+    res.status(500).json({ error: 'Login failed', details: error.message });
   }
 });
 
@@ -55,7 +62,7 @@ app.get('/api/profile/:email', async (req, res) => {
   const { email } = req.params;
 
   try {
-    const profile = await Profile.findOne({ email: email });
+    const profile = await Profile.findOne({ email });
 
     if (!profile) {
       return res.status(404).json({ message: 'Profile not found' });
@@ -67,6 +74,20 @@ app.get('/api/profile/:email', async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve profile', details: error.message });
   }
 });
+
+app.post('/api/update-points', async (req, res) => {
+  const { email, points } = req.body;
+
+  try {
+    // Update points in the database
+    await db.collection('users').updateOne({ email }, { $set: { points } });
+    res.status(200).json({ message: 'Points updated successfully.' });
+  } catch (error) {
+    console.error('Error updating points:', error);
+    res.status(500).json({ message: 'Failed to update points.' });
+  }
+});
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;

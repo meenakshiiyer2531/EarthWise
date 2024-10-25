@@ -15,20 +15,20 @@ const Sidebar = () => {
   const [activeComponent, setActiveComponent] = useState('Dashboard'); // State to track the active component
   const [isLoggedOut, setIsLoggedOut] = useState(false); // State to track if the user is logged out
   const [showNotification, setShowNotification] = useState(false); // State to track notification visibility
-
+  const { language } = globalState; // Access global language state
   const sidebarItems = [
-    { name: 'Home', icon: '/sidebar/home.png' },
-    { name: 'Modules', icon: '/sidebar/modules.png' },
-    { name: 'Science Lab', icon: '/sidebar/experiment.png' },
-    { name: 'Resources', icon: '/sidebar/resources.png' },
+    { name: language === 'kn' ? 'ಮುಖಪುಟ' : 'Home', icon: '/sidebar/home.png' },
+    { name: language === 'kn' ? 'ಮಾಡ್ಯೂಲ್‌ಗಳು' : 'Modules', icon: '/sidebar/modules.png' },
+    { name: language === 'kn' ? 'ವಿಜ್ಞಾನ ಪ್ರಯೋಗಾಲಯ' : 'Science Lab', icon: '/sidebar/experiment.png' },
+    { name: language === 'kn' ? 'ಮೂಲಗಳು' : 'Resources', icon: '/sidebar/resources.png' },
   ];
 
   const handleSidebarItemClick = (item) => {
     const componentMap = {
-      Home: 'Dashboard',
-      Modules: 'Modules',
-      'Science Lab': 'Science Lab',
-      Resources: 'Resources',
+      [language === 'kn' ? 'ಮುಖಪುಟ' : 'Home']: 'Dashboard',
+      [language === 'kn' ? 'ಮಾಡ್ಯೂಲ್‌ಗಳು' : 'Modules']: 'Modules',
+      [language === 'kn' ? 'ವಿಜ್ಞಾನ ಪ್ರಯೋಗಾಲಯ' : 'Science Lab']: 'Science Lab',
+      [language === 'kn' ? 'ಮೂಲಗಳು' : 'Resources']: 'Resources',
     };
     setActiveComponent(componentMap[item]);
     setShowNotification(false); // Hide notifications when navigating to another page
@@ -36,7 +36,9 @@ const Sidebar = () => {
 
   // Logout handler
   const handleLogout = () => {
-    globalState.email = null; // Set the global email variable to null
+    globalState.email = ''; // Reset the email to an empty string
+    globalState.points = 0; // Reset the points to 0
+    globalState.language = 'en'; // Reset the language to default 'en'
     setIsLoggedOut(true); // Set logged-out state to true
   };
 
@@ -86,12 +88,12 @@ const Sidebar = () => {
         {/* Visit United Nations Section */}
         <div className="mt-10 bg-green-100 bg-opacity-75 p-4 rounded-lg flex items-center">
           <div className="flex-1">
-            <h2 className="text-xl font-semibold text-gray-800">Visit United Nations</h2>
+            <h2 className="text-xl font-semibold text-gray-800">{language === 'kn' ? 'ಯುನೈಟೆಡ್ ನೇಶನ್ಸ್‌ಗೆ ಭೇಟಿ ನೀಡಿ' : 'Visit United Nations'}</h2>
             <p className="text-gray-600 text-lg">
-              Browse the United Nations website to learn more about the 17 sustainable development goals.
+              {language === 'kn' ? '17 ಸ್ಥಿರ ಅಭಿವೃದ್ಧಿ ಗುರಿಗಳ ಬಗ್ಗೆ ಹೆಚ್ಚಿನ ಮಾಹಿತಿಯನ್ನು ತಿಳಿಯಲು ಯುನೈಟೆಡ್ ನೇಶನ್ಸ್ ವೆಬ್‌ಸೈಟ್ ಅನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ.' : 'Browse the United Nations website to learn more about the 17 sustainable development goals.'}
             </p>
             <Link href="https://sdgs.un.org/goals" className="bg-purple-500 text-white px-4 py-2 rounded mt-2 inline-block text-lg">
-              Visit site
+              {language === 'kn' ? 'ವೆಬ್‌ಸೈಟ್ನಿಗೆ ಭೇಟಿ ನೀಡಿ' : 'Visit site'}
             </Link>
           </div>
           <div className="flex-shrink-0">
@@ -105,7 +107,7 @@ const Sidebar = () => {
           onClick={handleLogout} // Trigger the logout handler on click
         >
           <img src="/logout.png" alt="Logo" className="h-6 w-6 mr-2" />
-          Logout
+          {language === 'kn' ? 'ಔಟ್' : 'Logout'}
         </button>
       </div>
 

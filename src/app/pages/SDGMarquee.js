@@ -26,7 +26,7 @@ export default function SDGMarquee() {
     <Marquee gradient={false} speed={50}>
       {sdgData.map((sdg) => (
         <div key={sdg.id} className="p-4">
-          <Image src={sdg.logo} alt={`SDG ${sdg.id}`} width={100} height={100} />
+          <Image src={sdg.logo} alt={`SDG ${sdg.id}`} width={180} height={180} />
         </div>
       ))}
     </Marquee>

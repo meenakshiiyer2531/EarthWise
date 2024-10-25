@@ -1,88 +1,183 @@
-import { useState } from 'react';
-import ModulePath from './ModulePath';
+import { useState, useEffect } from 'react';
+import { franc } from 'franc'; // Updated import for the franc library
+import ModulePath from './Module-g2';
+import Image from 'next/image';
+import { globalState } from '../globalState'; // Import the global state
 
 const Module2 = () => {
   const [showModulePath, setShowModulePath] = useState(false); // State to control rendering of ModulePath
+  const [voices, setVoices] = useState([]); // State to hold available voices
+
+  // Load voices
+  const loadVoices = () => {
+    const availableVoices = window.speechSynthesis.getVoices();
+    setVoices(availableVoices);
+  };
+
+  useEffect(() => {
+    loadVoices(); // Load voices initially
+    window.speechSynthesis.onvoiceschanged = loadVoices; // Reload voices when available
+  }, []);
 
   // Function to handle showing the ModulePath
   const handleShowModulePath = () => {
     setShowModulePath(true);
   };
 
+  // Function to handle Text-to-Speech
+  const handleTextToSpeech = () => {
+    const text = globalState.language === 'kn' ? `
+      MODULE 2: ಹಸಿವು ಇಲ್ಲ
+      Q: 50 ವರ್ಷಗಳ ನಂತರ ವಿಶ್ವದಲ್ಲಿ ಹಸಿವು ಇರುತ್ತದೆಯೇ? ಇದು ಇಂದಿನ ಬೆಳವಣಿಗೆಗೆ ಆಧಾರಿತ ಪ್ರಶ್ನೆಯಾಗಿದೆ!
+      A: ಹಸಿವು ಸಂಪೂರ್ಣವಾಗಿ ನಿಲ್ಲಿಸಬಹುದು ಆದರೆ ನಾವು ನಮ್ಮ ಆಹಾರ ಸಂಪತ್ತನ್ನು ಮತ್ತು ಉತ್ಪಾದನೆಯ ಕಾರ್ಯತಂತ್ರಗಳನ್ನು ಸುಧಾರಿಸಬೇಕು.
+      ಇದು ಏನು: ಹಸಿವು ಎಂದರೆ ತಿನ್ನಲು ಸಾಕಷ್ಟು ಆಹಾರವಿಲ್ಲ. ಜನರಿಗೆ ಅಗತ್ಯವಾದ ಆಹಾರವಿಲ್ಲದಿದ್ದರೆ ಅವರ ಆರೋಗ್ಯದ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುತ್ತದೆ. SDG 2 ಗುರಿಯು ಹಸಿವು ಮುಗಿಸಲು ಮತ್ತು ನೂತನ ಆಹಾರ ವ್ಯವಸ್ಥೆಗಳನ್ನು ಬೆಳೆಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ.
+      ಜಾಗೃತಿಯು ಮತ್ತು ಉದ್ದೇಶ: ಆಹಾರದ ಪ್ರಮಾಣದ ಬದಲಾವಣೆ. ಹಸಿವಿನಿಂದ ಬಳಲುವವರು ಮತ್ತು ಹೆಚ್ಚು ಆಹಾರವನ್ನು ಕಳೆಯುವವರ ನಡುವೆ ವ್ಯತ್ಯಾಸ.
+      ಉದಾಹರಣೆ: ಬಾಡಿಕೊಂಡ ಆಹಾರವನ್ನು ಕಡಿಮೆ ಮಾಡುವುದು ಹೇಗೆ ಹಸಿವು ಪರಿಹಾರಕ್ಕೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ ಎಂಬುದರ ಉದಾಹರಣೆ.
+      ವಾಸ್ತವ ಪರಿಹಾರ: ಶಾಲೆಗಳಲ್ಲಿ ಆಹಾರ ಕೊಡುಗೆಗಳನ್ನು ಏರ್ಪಡಿಸುವುದು, ಅಗತ್ಯವಿರುವವರಿಗಾಗಿ ಆಹಾರ ಸಂಗ್ರಹಣಾ ಕಾರ್ಯಗಳನ್ನು ಸಂಘಟಿಸುವುದು.
+    ` : `
+      MODULE 2: Zero Hunger
+      Q: Will hunger exist in the world after 50 years? It's a question based on today's growth!
+      A: Hunger can be completely eradicated, but we must improve our food resources and production strategies.
+      What it is: Hunger means not having enough food to eat. If people lack necessary food, it affects their health. SDG 2 aims to end hunger and foster new food systems to help solve this problem.
+      Awareness and Purpose: Changes in food supply. The difference between those who suffer from hunger and those who waste food.
+      Example: How reducing food waste can help in solving hunger.
+      Real-Life Solution: Organizing food donation drives at schools and arranging food collection campaigns for those in need.
+    `;
+
+    // Use the SpeechSynthesis API
+    const speech = new SpeechSynthesisUtterance();
+    speech.text = text;
+
+    // Detect the language using Franc
+    const langCode = franc(text);
+    let language = globalState.language === 'kn' ? 'kn-IN' : 'en-US'; // Set language based on global state
+
+    speech.lang = language;
+
+    // Select a voice based on the detected language
+    const selectedVoice = voices.find(voice => voice.lang === language);
+    if (selectedVoice) {
+      speech.voice = selectedVoice;
+    } else {
+      alert(`No voice available for language: ${language}`);
+    }
+
+    // Speak the text
+    window.speechSynthesis.speak(speech);
+  };
+
   if (showModulePath) {
     return <ModulePath />; // Render ModulePath if the state is true
   }
+
   return (
-    <div className="bg-white py-6 px-10 rounded-lg shadow-md h-auto relative">
-      {/* Heading Section */}
+    <div className="bg-white py-20 px-10 rounded-lg shadow-md h-auto min-h-[900px] relative">
+      {/* Combined Heading and Question Section */}
       <div className="text-center mb-6">
-        <h1 className="text-3xl font-bold text-red-600">MODULE 2: ZERO HUNGER</h1>
+        <h1 className="text-3xl font-bold text-red-600">
+          {globalState.language === 'kn' ? 'MODULE 2: ಹಸಿವು ಇಲ್ಲ' : 'MODULE 2: Zero Hunger'}
+        </h1>
       </div>
 
       {/* Question Section */}
       <div className="bg-blue-100 p-6 rounded-lg mb-4">
         <h2 className="text-xl font-semibold text-blue-800">
-          Q: If The Hunger Games became real in 30 years, where food was scarce and people had to fight for it, what could we do today to prevent that future? Can we turn the "Hunger Games" into "Healthy Games" by changing farming now?
+          {globalState.language === 'kn' 
+            ? 'Q: 50 ವರ್ಷಗಳ ನಂತರ ವಿಶ್ವದಲ್ಲಿ ಹಸಿವು ಇರುತ್ತದೆಯೇ? ಇದು ಇಂದಿನ ಬೆಳವಣಿಗೆಗೆ ಆಧಾರಿತ ಪ್ರಶ್ನೆಯಾಗಿದೆ!'
+            : 'Q: Will hunger exist in the world after 50 years? It\'s a question based on today\'s growth!'
+          }
         </h2>
       </div>
 
       {/* Image Section */}
-      <div className="flex justify-center mb-4">
-        <img
-          src="/sdg2.gif"
-          alt="Hunger Games"
-          className="rounded-lg shadow-md w-120 h-80" // Adjust width and height as needed
-        />
+      <div className="flex justify-center mb-8">
+        <img src="/sdg2.gif" alt="Zero Hunger" className="rounded-lg shadow-md" />
       </div>
 
       {/* Answer Section */}
       <div className="bg-blue-100 p-6 rounded-lg mb-4">
-        <p className="text-lg font-semibold text-blue-800">
-          A: Yes! By using smart farming today—like hydroponics and sustainable crops—we could prevent future food shortages. We could turn the Hunger Games into a healthy world where everyone has enough to eat.
+        <p className="text-lg text-blue-800">
+          {globalState.language === 'kn' 
+            ? 'A: ಹಸಿವು ಸಂಪೂರ್ಣವಾಗಿ ನಿಲ್ಲಿಸಬಹುದು ಆದರೆ ನಾವು ನಮ್ಮ ಆಹಾರ ಸಂಪತ್ತನ್ನು ಮತ್ತು ಉತ್ಪಾದನೆಯ ಕಾರ್ಯತಂತ್ರಗಳನ್ನು ಸುಧಾರಿಸಬೇಕು.'
+            : 'A: Hunger can be completely eradicated, but we must improve our food resources and production strategies.'
+          }
         </p>
       </div>
 
       {/* Information Section */}
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="bg-green-100 p-4 rounded-lg">
-          <h3 className="text-lg font-bold text-green-800">What it is:</h3>
+          <h3 className="text-lg font-bold text-green-800">
+            {globalState.language === 'kn' ? 'ಏನು ಎಂಬುದು:' : 'What it is:'}
+          </h3>
           <p className="text-green-700">
-            The zero hunger aim wants to make sure everyone gets enough food to eat every day. Many people around the world go to bed hungry because they don’t have enough food or can’t grow enough crops.
+            {globalState.language === 'kn' 
+              ? 'ಹಸಿವು ಎಂದರೆ ತಿನ್ನಲು ಸಾಕಷ್ಟು ಆಹಾರವಿಲ್ಲ. ಜನರಿಗೆ ಅಗತ್ಯವಾದ ಆಹಾರವಿಲ್ಲದಿದ್ದರೆ ಅವರ ಆರೋಗ್ಯದ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುತ್ತದೆ. SDG 2 ಗುರಿಯು ಹಸಿವು ಮುಗಿಸಲು ಮತ್ತು ನೂತನ ಆಹಾರ ವ್ಯವಸ್ಥೆಗಳನ್ನು ಬೆಳೆಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ.'
+              : 'Hunger means not having enough food to eat. If people lack necessary food, it affects their health. SDG 2 aims to end hunger and foster new food systems to help solve this problem.' 
+            }
           </p>
         </div>
         <div className="bg-green-100 p-4 rounded-lg">
-          <h3 className="text-lg font-bold text-green-800">Awareness and Purpose:</h3>
+          <h3 className="text-lg font-bold text-green-800">
+            {globalState.language === 'kn' ? 'ಜಾಗೃತಿಯು ಮತ್ತು ಉದ್ದೇಶ:' : 'Awareness and Purpose:'}
+          </h3>
           <p className="text-green-700">
-            Hunger is often caused by things like droughts (when there’s no rain) or poor farming methods that damage the soil. Also, some people waste food, while others don’t have enough. We need to find ways to grow food better and make sure everyone gets their fair share.
+            {globalState.language === 'kn' 
+              ? 'ಆಹಾರದ ಪ್ರಮಾಣದ ಬದಲಾವಣೆ. ಹಸಿವಿನಿಂದ ಬಳಲುವವರು ಮತ್ತು ಹೆಚ್ಚು ಆಹಾರವನ್ನು ಕಳೆಯುವವರ ನಡುವೆ ವ್ಯತ್ಯಾಸ.'
+              : 'Changes in food supply. The difference between those who suffer from hunger and those who waste food.' 
+            }
           </p>
         </div>
       </div>
 
-      {/* Example Section */}
-      <div className="bg-purple-100 p-4 rounded-lg mb-4">
-        <h3 className="text-lg font-bold text-purple-800">Example:</h3>
-        <p className="text-purple-700">
-          Think of a garden. If you plant too many crops without taking care of the soil, the plants might stop growing well, and soon you won't have enough to eat. But if you learn how to take care of the soil by using compost (recycled food waste) and rotating crops, your garden can grow plenty of food for you and your neighbors.
-        </p>
+      {/* Example and Real-Life Solution Sections */}
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="bg-yellow-100 p-4 rounded-lg">
+          <h3 className="text-lg font-bold text-yellow-800">
+            {globalState.language === 'kn' ? 'ಉದಾಹರಣೆ:' : 'Example:'}
+          </h3>
+          <p className="text-yellow-700">
+            {globalState.language === 'kn' 
+              ? 'ಬಾಡಿಕೊಂಡ ಆಹಾರವನ್ನು ಕಡಿಮೆ ಮಾಡುವುದು ಹೇಗೆ ಹಸಿವು ಪರಿಹಾರಕ್ಕೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ ಎಂಬುದರ ಉದಾಹರಣೆ.'
+              : 'How reducing food waste can help in solving hunger.' 
+            }
+          </p>
+        </div>
+        <div className="bg-yellow-100 p-4 rounded-lg">
+          <h3 className="text-lg font-bold text-yellow-800">
+            {globalState.language === 'kn' ? 'ವಾಸ್ತವ ಪರಿಹಾರ:' : 'Real-Life Solution:'}
+          </h3>
+          <p className="text-yellow-700">
+            {globalState.language === 'kn' 
+              ? 'ಶಾಲೆಗಳಲ್ಲಿ ಆಹಾರ ಕೊಡುಗೆಗಳನ್ನು ಏರ್ಪಡಿಸುವುದು, ಅಗತ್ಯವಿರುವವರಿಗಾಗಿ ಆಹಾರ ಸಂಗ್ರಹಣಾ ಕಾರ್ಯಗಳನ್ನು ಸಂಘಟಿಸುವುದು.'
+              : 'Organizing food donation drives at schools and arranging food collection campaigns for those in need.' 
+            }
+          </p>
+        </div>
       </div>
 
-      {/* Real-Life Solution Section */}
-      <div className="bg-yellow-100 p-4 rounded-lg">
-        <h3 className="text-lg font-bold text-yellow-800">Real-Life Solution:</h3>
-        <p className="text-yellow-700">
-          You can start a small garden at school or at home, where you learn how to grow vegetables like tomatoes or beans. You can also visit a local farm to learn how farmers grow food and how you can help people who don’t have enough food by not wasting what you eat.
-        </p>
-      </div>
+      {/* Button to Show Module Path */}
+      <button
+        onClick={handleShowModulePath}
+        className="mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
+      >
+        {globalState.language === 'kn' ? 'ಮುಂದೆ' : 'NEXT'}
+      </button>
 
-      {/* Button to Show ModulePath */}
-      <div className="absolute bottom-4 right-4">
-        <button
-          onClick={handleShowModulePath} // Change state to show ModulePath
-          className="bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition duration-200"
-        >
-          BACK
-        </button>
-      </div>
+       {/* Ask Me Section - Can I speak? GIF */}
+<div className="fixed bottom-2 right-10 flex items-center cursor-pointer" onClick={handleTextToSpeech}>
+  <Image 
+    src="/dog.gif" 
+    alt={globalState.language === 'kn' ? 'ನಾನು ಮಾತನಾಡಬಹುದೇ?' : 'Can I speak?'} // Conditional alt text
+    width={120} 
+    height={120} 
+    className="cursor-pointer" 
+  />
+  <span className="bg-green-300 text-black font-semibold px-3 py-1 rounded-full mt-1 text-sm absolute -top-6">
+    {globalState.language === 'kn' ? 'ನಾನು ಮಾತನಾಡಬಹುದೇ?' : 'Can I speak?'} 
+  </span>
+</div>
+
     </div>
   );
 };

@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const multer = require('multer'); // For handling file uploads
+const path = require('path');
 
 // MongoDB connection string
 const mongoURI = 'mongodb+srv://meiyer:2002@cluster0.brr5l.mongodb.net/Earthwise?retryWrites=true&w=majority';
@@ -26,6 +28,18 @@ const profileSchema = new mongoose.Schema({
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
+
+// Multer setup for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Destination directory for uploaded files
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`); // Unique file name
+  }
+});
+
+const upload = multer({ storage });
 
 // POST route for login (create or retrieve profile)
 app.post('/api/login', async (req, res) => {
@@ -75,19 +89,53 @@ app.get('/api/profile/:email', async (req, res) => {
   }
 });
 
+// POST route to upload a file
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  const { originalname, path: filePath } = req.file;
+
+  // Here you can save the file info to your database if needed
+  try {
+    // Example: Save file info in a separate collection if desired
+    // You can create a separate schema for storing files if necessary
+    res.status(201).json({
+      message: 'File uploaded successfully!',
+      file: {
+        originalName: originalname,
+        path: filePath,
+      },
+    });
+  } catch (error) {
+    console.error('Error saving file info:', error);
+    res.status(500).json({ message: 'File upload failed', details: error.message });
+  }
+});
+
+// Update points route
 app.post('/api/update-points', async (req, res) => {
   const { email, points } = req.body;
 
   try {
     // Update points in the database
-    await db.collection('users').updateOne({ email }, { $set: { points } });
-    res.status(200).json({ message: 'Points updated successfully.' });
+    const updatedProfile = await Profile.findOneAndUpdate(
+      { email },
+      { points },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedProfile) {
+      return res.status(404).json({ message: 'Profile not found' });
+    }
+
+    res.status(200).json({ message: 'Points updated successfully.', profile: updatedProfile });
   } catch (error) {
     console.error('Error updating points:', error);
     res.status(500).json({ message: 'Failed to update points.' });
   }
 });
-
 
 // Start the server
 const PORT = process.env.PORT || 5000;

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-
+import AboutUs from './AboutUs';
 export default function Header({ handleLoginClick, handleSignUpClick }) {
   return (
     <header className="bg-green-500 p-4 flex justify-between items-center">

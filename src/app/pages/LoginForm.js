@@ -4,7 +4,7 @@ import { auth } from '../Firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Header from './Header';         // Import the Header component
 import Footer from './Footer';         // Import the Footer component
-import Sidebar from './SideBar';   // Import the Dashboard component
+import Sidebar from './Translate';   // Import the Dashboard component
 import { globalState } from '../globalState'; // Import the global object
 
 export default function LoginForm({ handleSignUpClick }) {

@@ -1,29 +1,31 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Experiment1 from './Experiment1'; // Import Experiment1 component
+import { globalState } from '../globalState'; // Import global state for language
 
 const ScienceLab = () => {
+  const { language } = globalState; // Access global language state
   const [selectedExperiment, setSelectedExperiment] = useState(null); // State to track selected experiment
   const [isExperimentActive, setIsExperimentActive] = useState(false); // State to track if an experiment is active
 
   const experiments = [
-    { id: 1, name: 'Experiment 1', image: '/path-logo/image1.png', component: <Experiment1 /> },
-    { id: 2, name: 'Experiment 2', image: '/path-logo/image2.png', component: <Experiment1 /> },
-    { id: 3, name: 'Experiment 3', image: '/path-logo/image3.png', component: <Experiment1 /> },
-    { id: 4, name: 'Experiment 4', image: '/path-logo/image4.png', component: <Experiment1 /> },
-    { id: 5, name: 'Experiment 5', image: '/path-logo/image5.png', component: <Experiment1 /> },
-    { id: 6, name: 'Experiment 6', image: '/path-logo/image6.png', component: <Experiment1 /> },
-    { id: 7, name: 'Experiment 7', image: '/path-logo/image7.png', component: <Experiment1 /> },
-    { id: 8, name: 'Experiment 8', image: '/path-logo/image8.png', component: <Experiment1 /> },
-    { id: 9, name: 'Experiment 9', image: '/path-logo/image9.png', component: <Experiment1 /> },
-    { id: 10, name: 'Experiment 10', image: '/path-logo/image10.png', component: <Experiment1 /> },
-    { id: 11, name: 'Experiment 11', image: '/path-logo/image11.png', component: <Experiment1 /> },
-    { id: 12, name: 'Experiment 12', image: '/path-logo/image12.png', component: <Experiment1 /> },
-    { id: 13, name: 'Experiment 13', image: '/path-logo/image13.png', component: <Experiment1 /> },
-    { id: 14, name: 'Experiment 14', image: '/path-logo/image14.png', component: <Experiment1 /> },
-    { id: 15, name: 'Experiment 15', image: '/path-logo/image15.png', component: <Experiment1 /> },
-    { id: 16, name: 'Experiment 16', image: '/path-logo/image16.png', component: <Experiment1 /> },
-    { id: 17, name: 'Experiment 17', image: '/path-logo/image17.png', component: <Experiment1 /> },
+    { id: 1, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 1' : 'Experiment 1', image: '/path-logo/image1.png', component: <Experiment1 /> },
+    { id: 2, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 2' : 'Experiment 2', image: '/path-logo/image2.png', component: <Experiment1 /> },
+    { id: 3, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 3' : 'Experiment 3', image: '/path-logo/image3.png', component: <Experiment1 /> },
+    { id: 4, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 4' : 'Experiment 4', image: '/path-logo/image4.png', component: <Experiment1 /> },
+    { id: 5, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 5' : 'Experiment 5', image: '/path-logo/image5.png', component: <Experiment1 /> },
+    { id: 6, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 6' : 'Experiment 6', image: '/path-logo/image6.png', component: <Experiment1 /> },
+    { id: 7, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 7' : 'Experiment 7', image: '/path-logo/image7.png', component: <Experiment1 /> },
+    { id: 8, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 8' : 'Experiment 8', image: '/path-logo/image8.png', component: <Experiment1 /> },
+    { id: 9, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 9' : 'Experiment 9', image: '/path-logo/image9.png', component: <Experiment1 /> },
+    { id: 10, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 10' : 'Experiment 10', image: '/path-logo/image10.png', component: <Experiment1 /> },
+    { id: 11, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 11' : 'Experiment 11', image: '/path-logo/image11.png', component: <Experiment1 /> },
+    { id: 12, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 12' : 'Experiment 12', image: '/path-logo/image12.png', component: <Experiment1 /> },
+    { id: 13, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 13' : 'Experiment 13', image: '/path-logo/image13.png', component: <Experiment1 /> },
+    { id: 14, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 14' : 'Experiment 14', image: '/path-logo/image14.png', component: <Experiment1 /> },
+    { id: 15, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 15' : 'Experiment 15', image: '/path-logo/image15.png', component: <Experiment1 /> },
+    { id: 16, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 16' : 'Experiment 16', image: '/path-logo/image16.png', component: <Experiment1 /> },
+    { id: 17, name: language === 'kn' ? 'ಪ್ರಾಯೋಗಿಕ 17' : 'Experiment 17', image: '/path-logo/image17.png', component: <Experiment1 /> },
   ];
 
   const handleExperimentClick = (experiment) => {

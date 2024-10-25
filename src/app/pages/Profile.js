@@ -10,6 +10,7 @@ const Profile = () => {
 
   // Use the email from global state
   const userEmail = globalState.email; // Accessing email from global state
+  const { language } = globalState; // Access the language from global state
 
   // Avatar images array
   const avatars = [
@@ -86,7 +87,7 @@ const Profile = () => {
         <div className="flex flex-col items-center w-full mt-8">
           <div className="w-full">
             {loading ? (
-              <p>Loading...</p>
+              <p>{language === 'kn' ? 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...' : 'Loading...'}</p> // Localized loading text
             ) : error ? (
               <p className="text-red-500">{error}</p> // Display error message if any
             ) : userData ? (
@@ -104,13 +105,17 @@ const Profile = () => {
                 </div>
               </div>
             ) : (
-              <p>No user data available.</p>
+              <p>{language === 'kn' ? 'ಯೋಜನೆಯ ಮಾಹಿತಿ ಲಭ್ಯವಿಲ್ಲ.' : 'No user data available.'}</p> // Localized no data message
             )}
           </div>
 
           <div className="flex flex-col items-start w-full">
-            <h3 className="mt-8 text-2xl font-semibold text-black uppercase">PROGRESS:</h3>
-            <h2 className="mt-8 text-2xl font-semibold text-black uppercase">START LEARNING</h2>
+            <h3 className="mt-8 text-2xl font-semibold text-black uppercase">
+              {language === 'kn' ? 'ಪ್ರಗತಿ:' : 'Progress:'} {/* Localized progress title */}
+            </h3>
+            <h2 className="mt-8 text-2xl font-semibold text-black uppercase">
+              {language === 'kn' ? 'ಅಧ್ಯಯನ ಪ್ರಾರಂಭಿಸಿ' : 'Start Learning'} {/* Localized start learning */}
+            </h2>
             <div className="w-full bg-[#bebebe] rounded-[60px] mt-2">
               <div
                 style={{ width: `${progressWidth}%`, backgroundColor: 'green' }} // Dynamic width and color
@@ -118,7 +123,7 @@ const Profile = () => {
               />
             </div>
             <h3 className="mt-8 text-2xl font-semibold text-black uppercase">
-              POINTS: {points} {/* Display real-time points */}
+              {language === 'kn' ? `ಅಂಕಗಳು: ${points}` : `Points: ${points}`} {/* Display real-time points */}
             </h3>
           </div>
         </div>

@@ -10,7 +10,6 @@ import LoginForm from './pages/LoginForm';
 import SignUpForm from './pages/SignUpForm';
 import SDGMarquee from './pages/SDGMarquee';
 
-
 export default function Home() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
@@ -41,15 +40,13 @@ export default function Home() {
 
       {/* Show Header and Footer only if the user is not in Login or SignUp */}
       {!showLogin && !showSignUp && (
-        <>
-          <Header handleLoginClick={handleLoginClick} handleSignUpClick={handleSignUpClick} />
-        </>
+        <Header handleLoginClick={handleLoginClick} handleSignUpClick={handleSignUpClick} />
       )}
 
       {/* Home Page Content */}
       {!showLogin && !showSignUp && !isLoggedIn && (
         <>
-          <section className="hero bg-green-300 p-8 relative overflow-hidden min-h-[500px] flex items-center justify-center">
+          <section className="hero bg-green-300 p-8 relative overflow-hidden min-h-[500px] flex items-center justify-center bg-black">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
               <Image
@@ -63,14 +60,14 @@ export default function Home() {
 
             {/* Welcome Text */}
             <div className="relative z-10 text-center">
-              <h1 className="text-8xl font-bold">Welcome to EarthWise</h1>
-              <p className="text-2xl mt-4">Your Journey Towards a Sustainable Future!</p>
+              <h1 className="text-8xl font-bold text-white">Welcome to EarthWise</h1>
+              <p className="text-2xl mt-4 text-white">Your Journey Towards a Sustainable Future!</p>
             </div>
           </section>
 
           {/* SDG Section */}
-          <section className="sdg-section p-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">The 17 Sustainable Development Goals</h2>
+          <section className="sdg-section p-8 text-center ">
+            <h2 className="text-4xl font-bold mb-4 text-white">The 17 Sustainable Development Goals</h2>
           </section>
 
           {/* SDG Marquee */}
@@ -81,7 +78,7 @@ export default function Home() {
             <div className="flex justify-center space-x-8">
               <button 
                 onClick={handleSignUpClick} 
-                className="bg-white text-black border-2 border-black py-3 px-6 rounded-md text-xl hover:bg-gray-200"
+                className="bg-white text-black border-2 border-white py-3 px-6 rounded-md text-xl hover:bg-gray-200"
               >
                 Create new account
               </button>
@@ -109,11 +106,7 @@ export default function Home() {
       {isLoggedIn && <Dashboard />}
 
       {/* Show Footer only if the user is not in Login or SignUp */}
-      {!showLogin && !showSignUp && (
-        <>
-          <Footer />
-        </>
-      )}
+      {!showLogin && !showSignUp && <Footer />}
     </>
   );
 }

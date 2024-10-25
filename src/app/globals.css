@@ -80,3 +80,31 @@ h1, h2, h3 {
 .bg-custom-green {
   background-color: #286031; /* Set the custom green background color */
 }
+.container {
+  max-width: 600px;
+  margin: auto;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}

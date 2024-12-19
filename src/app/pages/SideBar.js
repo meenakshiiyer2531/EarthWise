@@ -16,19 +16,20 @@ const Sidebar = () => {
   const [isLoggedOut, setIsLoggedOut] = useState(false); // State to track if the user is logged out
   const [showNotification, setShowNotification] = useState(false); // State to track notification visibility
   const { language } = globalState; // Access global language state
+
   const sidebarItems = [
-    { name: language === 'kn' ? 'ಮುಖಪುಟ' : 'Home', icon: '/sidebar/home.png' },
-    { name: language === 'kn' ? 'ಮಾಡ್ಯೂಲ್‌ಗಳು' : 'Modules', icon: '/sidebar/modules.png' },
-    { name: language === 'kn' ? 'ವಿಜ್ಞಾನ ಪ್ರಯೋಗಾಲಯ' : 'Science Lab', icon: '/sidebar/experiment.png' },
-    { name: language === 'kn' ? 'ಮೂಲಗಳು' : 'Resources', icon: '/sidebar/resources.png' },
+    { name: 'Home', icon: '/sidebar/home.png' },
+    { name: 'Modules', icon: '/sidebar/modules.png' },
+    { name: 'Science Lab', icon: '/sidebar/experiment.png' },
+    { name: 'Resources', icon: '/sidebar/resources.png' },
   ];
 
   const handleSidebarItemClick = (item) => {
     const componentMap = {
-      [language === 'kn' ? 'ಮುಖಪುಟ' : 'Home']: 'Dashboard',
-      [language === 'kn' ? 'ಮಾಡ್ಯೂಲ್‌ಗಳು' : 'Modules']: 'Modules',
-      [language === 'kn' ? 'ವಿಜ್ಞಾನ ಪ್ರಯೋಗಾಲಯ' : 'Science Lab']: 'Science Lab',
-      [language === 'kn' ? 'ಮೂಲಗಳು' : 'Resources']: 'Resources',
+      Home: 'Dashboard',
+      Modules: 'Modules',
+      'Science Lab': 'Science Lab',
+      Resources: 'Resources',
     };
     setActiveComponent(componentMap[item]);
     setShowNotification(false); // Hide notifications when navigating to another page
@@ -48,7 +49,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="flex bg-white min-h-screen">
+    <div className="flex bg-white min-h-screen pt-10">
       {/* Sidebar */}
       <div className="w-1/5 p-3 bg-custom-green rounded-xl">
         <div className="flex items-center mb-6">
@@ -88,12 +89,12 @@ const Sidebar = () => {
         {/* Visit United Nations Section */}
         <div className="mt-10 bg-green-100 bg-opacity-75 p-4 rounded-lg flex items-center">
           <div className="flex-1">
-            <h2 className="text-xl font-semibold text-gray-800">{language === 'kn' ? 'ಯುನೈಟೆಡ್ ನೇಶನ್ಸ್‌ಗೆ ಭೇಟಿ ನೀಡಿ' : 'Visit United Nations'}</h2>
+            <h2 className="text-xl font-semibold text-gray-800">Visit United Nations</h2>
             <p className="text-gray-600 text-lg">
-              {language === 'kn' ? '17 ಸ್ಥಿರ ಅಭಿವೃದ್ಧಿ ಗುರಿಗಳ ಬಗ್ಗೆ ಹೆಚ್ಚಿನ ಮಾಹಿತಿಯನ್ನು ತಿಳಿಯಲು ಯುನೈಟೆಡ್ ನೇಶನ್ಸ್ ವೆಬ್‌ಸೈಟ್ ಅನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ.' : 'Browse the United Nations website to learn more about the 17 sustainable development goals.'}
+              Browse the United Nations website to learn more about the 17 sustainable development goals.
             </p>
             <Link href="https://sdgs.un.org/goals" className="bg-purple-500 text-white px-4 py-2 rounded mt-2 inline-block text-lg">
-              {language === 'kn' ? 'ವೆಬ್‌ಸೈಟ್ನಿಗೆ ಭೇಟಿ ನೀಡಿ' : 'Visit site'}
+              Visit site
             </Link>
           </div>
           <div className="flex-shrink-0">
@@ -107,7 +108,7 @@ const Sidebar = () => {
           onClick={handleLogout} // Trigger the logout handler on click
         >
           <img src="/logout.png" alt="Logo" className="h-6 w-6 mr-2" />
-          {language === 'kn' ? 'ಔಟ್' : 'Logout'}
+          Logout
         </button>
       </div>
 
@@ -120,9 +121,6 @@ const Sidebar = () => {
             <div onClick={() => setShowNotification((prev) => !prev)}> {/* Toggle notification visibility */}
               <Image src="/notification.png" alt="Notifications" width={40} height={40} className="cursor-pointer" />
             </div>
-            {/* <div onClick={() => setActiveComponent('star')}>
-              <Image src="/star.png" alt="Star" width={40} height={40} className="cursor-pointer" />
-            </div> */}
             <div onClick={() => setActiveComponent('Profile')}>
               <Image src="/profile.png" alt="Profile" width={40} height={40} className="cursor-pointer" />
             </div>
@@ -136,7 +134,6 @@ const Sidebar = () => {
         {activeComponent === 'Resources' && <Resources />}
         {activeComponent === 'Profile' && <Profile onClose={() => setActiveComponent('Dashboard')} />} {/* Ensure Profile is rendered */}
         {showNotification && <Notification />} {/* Show Notification component when active */}
-        {activeComponent === 'star' && <Star />} {/* Ensure Star is rendered */}
       </div>
     </div>
   );

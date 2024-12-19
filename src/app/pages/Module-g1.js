@@ -1,6 +1,7 @@
 "use client"; // Ensure this component is a client component
 import { useEffect, useRef } from 'react';
 import { useState } from 'react';
+import ModulePath from './ModulePath';
 
 const clues = [
   { clue: "Individuals living below the _____ line struggle to meet their basic needs.", answer: "Poverty", positions:[{ row: 4, col: 10 },{ row: 4, col: 11},{ row: 4, col: 12},{ row: 4, col: 13},{ row: 4, col: 14 },{ row: 4, col: 15 },{ row: 4, col: 16 }] },
@@ -131,6 +132,7 @@ const letterPositions = [
 
 
 const Crossword = () => {
+  const [showModulePath, setShowModulePath] = useState(false); // State to control rendering of ModulePath
   const [answers, setAnswers] = useState(Array.from({ length: gridRows }, () => Array(gridCols).fill("")));
   const [correctWords, setCorrectWords] = useState([]); // Keep track of correct words
   const inputRefs = useRef(Array.from({ length: gridRows }, () => Array(gridCols).fill(null))); // References to input fields
@@ -150,6 +152,9 @@ clues.forEach((clue) => {
   if (isWordCorrect && !correctWords.includes(clue.answer)) {
     setCorrectWords([...correctWords, clue.answer]); // Add correct word to the list
   }
+   // Check if all boxes are filled
+   const allFilled = newAnswers.every((row) => row.every((cell) => cell !== ""));
+   setIsGridFilled(allFilled);
 });
 }
 };
@@ -191,8 +196,17 @@ clues.forEach((clue) => {
     }
   }, []);
 
+  const handleShowModulePath = () => {
+    setShowModulePath(true);
+  };
+
+
+  if (showModulePath) {
+    return <ModulePath />; // Render ModulePath if the state is true
+  }
+
   return (
-    <div style={{ backgroundColor: "#e0f7df", padding: "0px 200px", minHeight: "160vh" }}>
+    <div style={{ backgroundColor: "#e0f7df", padding: "0px 30px", minHeight: "90vh" }}>
       <h1 className="title">Crossword Puzzle</h1>
       <div className="crossword-grid">
         {Array.from({ length: gridRows }).map((_, row) => (
@@ -223,7 +237,7 @@ clues.forEach((clue) => {
       {/* Clue Section */}
       <div className="clues">
         <h1>Clues</h1>
-        <h3>Across</h3>
+        <h3>Down</h3>
         <ol>
           <li>1. Ensuring everyone has consistent access to enough nutritious food is referred to as <strong>_____</strong> security.</li>
           <li>2. Groups often left behind in economic progress, facing discrimination and exclusion, are termed <strong>_____</strong> populations.</li>
@@ -234,7 +248,7 @@ clues.forEach((clue) => {
           <li>7. An economic system that seeks to benefit all members of society, especially the disadvantaged, is termed an <strong>_____</strong> economy.</li>
         </ol>
         
-        <h3>Down</h3>
+        <h3>Across</h3>
         <ol>
           <li>6. Comprehensive support systems that include education, healthcare, and financial assistance are called social <strong>_____</strong>.</li>
           <li>8. The condition where people lack sufficient resources for food, water, and shelter is known as material <strong>_____</strong>.</li>
@@ -246,7 +260,28 @@ clues.forEach((clue) => {
           <li>14. Community initiatives aimed at improving living standards while preserving the environment are examples of <strong>_____</strong> development.</li>
         </ol>
       </div>
-        
+      <button
+  onClick={handleShowModulePath}
+  style={{
+    padding: "0.5rem 1rem",  // Equivalent to py-2 px-4 (padding 0.5rem top and bottom, 1rem left and right)
+    fontSize: "16px",
+    backgroundColor: "black",  // Background color set to black
+    color: "white",  // Text color set to white
+    border: "none",
+    borderRadius: "0.375rem",  // Equivalent to rounded (border-radius of 0.375rem)
+    cursor: "pointer",
+    display: "block",  // Ensures the button is a block element, useful for centering
+    margin: "0 auto",  // Centers the button horizontally
+    marginTop: "350px",  // Adds space above the button (adjust this value as needed)
+    width: "fit-content",  // Adjusts the button width to fit its content
+    height: "fit-content",  // Adjusts the button height to fit its content
+    transition: "background-color 0.3s ease",  // Adds smooth transition for hover effect
+  }}
+  
+>
+  Proceed to Module
+</button>
+
        
       {/* Add CSS styles for grid and input elements */}
       <style jsx>{`
@@ -320,15 +355,16 @@ clues.forEach((clue) => {
           background-color: #4CAF50;
         }
         .clues {
-        position: absolute;
-      top: 300; /* Adjust as needed */
-      left: 3000;
-      background-color: rgba(255, 255, 255, 0.8);
-      margin-right: 200;
-          color: black; 
-          padding: 20px;
-          border-radius: 5px;
-        }
+  position: absolute;
+  top: 40%; /* Adjust the vertical position */
+  right: 40px; /* Slightly push to the right */
+  background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+  color: black;
+  padding: 40px 40px 20px 20px; /* Added a bit more padding-right (30px) */
+  border-radius: 5px; /* Rounded corners */
+}
+
+
         .clues h2, .clues h3 {
           margin: 0;
           padding: 0;
@@ -339,6 +375,7 @@ clues.forEach((clue) => {
           .clues h1{
           margin: 0;
           padding: 0;
+          padding-top: 20px; /* Add space at the top */
           font-weight: bold;
           font-size: 25px; 
           text-align: center; 

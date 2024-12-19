@@ -9,6 +9,6 @@ export const globalState = {
   },
   
   setLanguage: (lang) => {
-    globalState.language = lang;
+    globalState.language = lang; // Set the chosen language in the global state
   },
 };

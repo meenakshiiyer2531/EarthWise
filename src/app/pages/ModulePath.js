@@ -9,6 +9,9 @@ import Module4 from './Module4';
 import Module5 from './Module5'; 
 import Quiz1 from './Quiz1'; 
 import Quiz2 from './Quiz2';
+import Module17 from './Module17'; // Import Module17
+import Module7 from './Module7';
+import Module8 from './Module8';
 
 const ModulePath = () => {
   
@@ -26,8 +29,8 @@ const ModulePath = () => {
     { id: 7, name: { kn: 'ಮಾಡ್ಯೂಲ್ 5', en: 'MODULE 5' }, image: '/path-logo/image 27.png', component: <Module5 /> },
     { id: 8, name: { kn: 'ಮಾಡ್ಯೂಲ್ 6', en: 'MODULE 6' }, image: '/path-logo/image 28.png', component: <Module1 /> },
     { id: 9, name: { kn: 'ಕ್ವಿಜ್ 3', en: 'QUIZ 3' }, image: '/path-logo/quiz.png', component: <Module1 /> },
-    { id: 10, name: { kn: 'ಮಾಡ್ಯೂಲ್ 7', en: 'MODULE 7' }, image: '/path-logo/image 29.png', component: <Module1 /> },
-    { id: 11, name: { kn: 'ಮಾಡ್ಯೂಲ್ 8', en: 'MODULE 8' }, image: '/path-logo/image 30.png', component: <Module1 /> },
+    { id: 10, name: { kn: 'ಮಾಡ್ಯೂಲ್ 7', en: 'MODULE 7' }, image: '/path-logo/image 29.png', component: <Module7 /> },
+    { id: 11, name: { kn: 'ಮಾಡ್ಯೂಲ್ 8', en: 'MODULE 8' }, image: '/path-logo/image 30.png', component: <Module8 /> },
     { id: 12, name: { kn: 'ಕ್ವಿಜ್ 4', en: 'QUIZ 4' }, image: '/path-logo/quiz.png', component: <Module1 /> },
     { id: 13, name: { kn: 'ಮಾಡ್ಯೂಲ್ 9', en: 'MODULE 9' }, image: '/path-logo/image 31.png', component: <Module1 /> },
     { id: 14, name: { kn: 'ಮಾಡ್ಯೂಲ್ 10', en: 'MODULE 10' }, image: '/path-logo/image 32.png', component: <Module1 /> },
@@ -40,8 +43,8 @@ const ModulePath = () => {
     { id: 21, name: { kn: 'ಕ್ವಿಜ್ 7', en: 'QUIZ 7' }, image: '/path-logo/quiz.png', component: <Module1 /> },
     { id: 22, name: { kn: 'ಮಾಡ್ಯೂಲ್ 15', en: 'MODULE 15' }, image: '/path-logo/image 37.png', component: <Module1 /> },
     { id: 23, name: { kn: 'ಮಾಡ್ಯೂಲ್ 16', en: 'MODULE 16' }, image: '/path-logo/image 38.png', component: <Module1 /> },
-    { id: 24, name: { kn: 'ಮಾಡ್ಯೂಲ್ 17', en: 'MODULE 17' }, image: '/path-logo/image 39.png', component: <Module1 /> },
-    { id: 25, name: { kn: 'ಕ್ವಿಜ್ 8', en: 'QUIZ 8' }, image: '/path-logo/quiz.png', component: <Module1 /> },
+    { id: 24, name: { kn: 'ಮಾಡ್ಯೂಲ್ 17', en: 'MODULE 17' }, image: '/path-logo/image 39.png', component: <Module17 /> },
+    { id: 25, name: { kn: 'ಕ್ವಿಜ್ 8', en: 'QUIZ 8' }, image: '/path-logo/quiz.png', component: <Module17 /> },
   ];
 
   const handleModuleClick = (module) => {
